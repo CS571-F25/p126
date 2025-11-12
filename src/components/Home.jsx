@@ -1,8 +1,10 @@
+import { Container } from "react-bootstrap";
+
 export default function Home(props) {
   return (
-    <div>
-      <h1>Initial Publish</h1>
-      <h2>/#/about has another page as in the tutorial</h2>
-    </div>
+    <Container fluid>
+      <h1>Fantasy Football Player Trends</h1>
+      <p>Welcome to the Fantasy Football Player Trends application. Use the navigation bar to explore players who are trending up, trending down, or to view your favorite players.</p>
+    </Container>
   );
 }
