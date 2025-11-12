@@ -1,3 +1,4 @@
+// This component is the page for displaying players who are "trending down" in performance.
 import { Container } from "react-bootstrap";
 
 export default function TrendingDown() {

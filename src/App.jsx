@@ -1,3 +1,5 @@
+// This component defines the main structure of the application, including the navigation bar
+// and the routing for all the pages.
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';

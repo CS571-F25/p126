@@ -1,3 +1,5 @@
+// This component renders the primary navigation bar for the application,
+// providing links to all the main pages.
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Nav, Navbar } from "react-bootstrap";
 

@@ -1,3 +1,4 @@
+// This component is the page for displaying players who are "trending up" in performance.
 import { Container } from "react-bootstrap";
 
 export default function TrendingUp() {

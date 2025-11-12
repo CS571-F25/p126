@@ -1,3 +1,4 @@
+// This component serves as the home page of the application, providing a welcome message.
 import { Container } from "react-bootstrap";
 
 export default function Home(props) {

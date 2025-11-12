@@ -1,3 +1,5 @@
+// This component displays the "About" page, which describes the purpose of the application
+// and its various pages.
 import { Container } from "react-bootstrap";
 
 export default function About() {
