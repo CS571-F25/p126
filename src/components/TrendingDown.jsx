@@ -1,11 +1,45 @@
 // This component is the page for displaying players who are "trending down" in performance.
-import { Container } from "react-bootstrap";
+import { Container, Table, Spinner } from "react-bootstrap";
+import { usePlayerData } from '../hooks/usePlayerData';
 
 export default function TrendingDown() {
+    const { top100Players, isLoading } = usePlayerData();
+
+    const trendingDownPlayers = top100Players.filter(p => p.trend === 'DOWN');
+
     return (
         <Container fluid>
-            <h1>Trending Down Players</h1>
-            <p>This page will display players who are performing worse than their season average.</p>
+            <h1>Trending Down Players (from Top 100)</h1>
+            <p>This page displays players from the top 100 list who are currently performing worse than their recent baseline along with their season rank in PPG.</p>
+            
+            {isLoading ? (
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            ) : (
+                <Table striped bordered hover responsive>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Team</th>
+                            <th>PPG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {trendingDownPlayers.map((player) => (
+                            <tr key={player.player_id}>
+                                <td>{top100Players.findIndex(p => p.player_id === player.player_id) + 1}</td>
+                                <td>{player.full_name}</td>
+                                <td>{player.position}</td>
+                                <td>{player.team || 'N/A'}</td>
+                                <td>{player.current_ppg}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            )}
         </Container>
     );
 }
