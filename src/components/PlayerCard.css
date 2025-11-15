@@ -1,8 +1,8 @@
 .player-card {
     border-radius: 8px;
     border: 1px solid #5a6268;
-    background-color: #495057; /* Medium grey background */
-    color: #FFFFFF; /* Pure white text */
+    background-color: #495057 !important; /* Override Bootstrap default */
+    color: #FFFFFF !important; /* Override Bootstrap default */
     transition: background-color 0.2s ease-in-out;
 }
 
