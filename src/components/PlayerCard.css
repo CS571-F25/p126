@@ -1,0 +1,80 @@
+.player-card {
+    border-radius: 8px;
+    border: 1px solid #5a6268;
+    background-color: #495057; /* Medium grey background */
+    color: #FFFFFF; /* Pure white text */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.player-card:hover {
+    background-color: #5a6268; /* Slightly lighter on hover */
+}
+
+.left-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Controls spacing for the left items */
+}
+
+.right-aligned-group {
+    position: absolute;
+    right: 1rem; /* Distance from the right edge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60%; /* Adjust width to control spacing of items */
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.placeholder-injury,
+.placeholder-trend,
+.placeholder-favorite {
+    height: 35px;
+    width: 35px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.vertical-line {
+    border-left: 2px solid #6c757d;
+    height: 30px;
+}
+
+.player-rank {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.player-logo img {
+    height: 35px;
+    width: 35px;
+}
+
+.player-name {
+    font-size: 1.2rem;
+    font-weight: bold; /* Bolding the name */
+    min-width: 150px; /* Give name some minimum space */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-info {
+    font-size: 1rem;
+    font-weight: bold; /* Bolding the position and team */
+}
+
+.player-ppg {
+    font-size: 1.1rem;
+    text-align: right;
+}
+
+.player-ppg .fw-bold {
+    font-weight: bold !important; /* Ensure PPG number is bold */
+}
