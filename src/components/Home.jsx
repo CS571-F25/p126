@@ -20,8 +20,8 @@ export default function Home() {
         <Container fluid>
             <div className="d-flex justify-content-between align-items-end mb-4">
                 <div>
-                    <h1>Top 100 Fantasy Players (PPR)</h1>
-                    <p className="mb-0">Welcome to the Fantasy Football Player Trends application. Here are the top 100 players based on Points Per Game.</p>
+                    <h1>Top 100 Fantasy Football Players (PPR)</h1>
+                    <p className="mb-0">Welcome to the Fantasy Football Player Trends application. Here are the current top 100 players in Fantasy Football based on their PPG using PPR format.</p>
                 </div>
                 <FilterControls 
                     searchQuery={searchQuery} 

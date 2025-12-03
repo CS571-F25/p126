@@ -1,33 +1,21 @@
 // This component renders the primary navigation bar for the application,
 // providing links to all the main pages.
-import { LinkContainer } from 'react-router-bootstrap';
+import { NavLink } from 'react-router-dom';
 import { Container, Nav, Navbar } from "react-bootstrap";
 
 export default function FantasyNav() {
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
-                <LinkContainer to="/">
-                    <Navbar.Brand>Fantasy Football Trends</Navbar.Brand>
-                </LinkContainer>
+                <Navbar.Brand as={NavLink} to="/">Fantasy Football Trends</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <LinkContainer to="/">
-                            <Nav.Link>Home</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to="/about">
-                            <Nav.Link>About</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to="/trending-up">
-                            <Nav.Link>Trending Up</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to="/trending-down">
-                            <Nav.Link>Trending Down</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to="/favorites">
-                            <Nav.Link>Favorites</Nav.Link>
-                        </LinkContainer>
+                        <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
+                        <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+                        <Nav.Link as={NavLink} to="/trending-up">Trending Up</Nav.Link>
+                        <Nav.Link as={NavLink} to="/trending-down">Trending Down</Nav.Link>
+                        <Nav.Link as={NavLink} to="/favorites">Favorites</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

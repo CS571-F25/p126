@@ -9,18 +9,24 @@ export function usePlayerData() {
         const fetchAllData = async () => {
             setIsLoading(true);
             try {
-                const currentWeek = 10;
+                const currentWeek = 14;
                 const allWeeks = Array.from({length: currentWeek}, (_, i) => i + 1);
 
-                const [playersRes, seasonStatsRes, ...weeklyStatsRes] = await Promise.all([
+                const [playersRes, seasonStatsRes, ...restRes] = await Promise.all([
                     fetch('https://api.sleeper.app/v1/players/nfl'),
                     fetch('https://api.sleeper.app/v1/stats/nfl/regular/2025'),
-                    ...allWeeks.map(week => fetch(`https://api.sleeper.app/v1/stats/nfl/regular/2025/${week}`))
+                    ...allWeeks.map(week => fetch(`https://api.sleeper.app/v1/stats/nfl/regular/2025/${week}`)),
+                    ...allWeeks.map(week => fetch(`https://api.sleeper.app/v1/projections/nfl/regular/2025/${week}`))
                 ]);
 
                 const playersData = await playersRes.json();
                 const seasonStats = await seasonStatsRes.json();
+                
+                const weeklyStatsRes = restRes.slice(0, currentWeek);
+                const weeklyProjectionsRes = restRes.slice(currentWeek);
+
                 const weeklyStats = await Promise.all(weeklyStatsRes.map(res => res.json()));
+                const weeklyProjections = await Promise.all(weeklyProjectionsRes.map(res => res.json()));
 
                 const fantasyPositions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
 
@@ -37,11 +43,12 @@ export function usePlayerData() {
                         // Build Game Log
                         const gameLog = allWeeks.map((week, index) => {
                             const weekStats = weeklyStats[index][player.player_id];
+                            const weekProj = weeklyProjections[index][player.player_id];
                             return {
                                 week: week,
                                 played: !!weekStats && (weekStats.gp > 0),
-                                opponent: weekStats?.opponent || null,
-                                pts_ppr: weekStats?.pts_ppr || 0
+                                pts_ppr: weekStats?.pts_ppr || 0,
+                                proj_ppr: weekProj?.pts_ppr || 0
                             };
                         });
 

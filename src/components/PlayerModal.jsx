@@ -16,15 +16,15 @@ export default function PlayerModal({ show, onHide, player }) {
                     <thead>
                         <tr>
                             <th>Week</th>
-                            <th>Opponent</th>
-                            <th>Points (PPR)</th>
+                            <th>Projected Points</th>
+                            <th>Actual Points (PPR)</th>
                         </tr>
                     </thead>
                     <tbody>
                         {player.gameLog && player.gameLog.map((game) => (
                             <tr key={game.week}>
                                 <td>{game.week}</td>
-                                <td>{game.opponent || '---'}</td>
+                                <td>{game.proj_ppr ? game.proj_ppr.toFixed(2) : '---'}</td>
                                 <td>{game.played ? game.pts_ppr.toFixed(2) : '---'}</td>
                             </tr>
                         ))}
@@ -34,11 +34,6 @@ export default function PlayerModal({ show, onHide, player }) {
                     <strong>Season Average: {player.current_ppg} PPG</strong>
                 </div>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
-                    Close
-                </Button>
-            </Modal.Footer>
         </Modal>
     );
 }

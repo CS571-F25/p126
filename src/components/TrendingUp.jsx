@@ -23,7 +23,7 @@ export default function TrendingUp() {
             <div className="d-flex justify-content-between align-items-end mb-4">
                 <div>
                     <h1>Trending Up Players (from Top 100)</h1>
-                    <p className="mb-0">This page displays players from the top 100 list who are currently performing better than their recent baseline.</p>
+                    <p className="mb-0">This page displays the football players from the top 100 list who are currently performing better in recent weeks than their season average.</p>
                 </div>
                 <FilterControls 
                     searchQuery={searchQuery} 

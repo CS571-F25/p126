@@ -27,7 +27,7 @@ export default function Favorites() {
                 <div>
                     <h1>My Favorites</h1>
                     <p className="mb-0">
-                        Here are the players you are tracking. Keep an eye on their performance and trends!
+                        Here are the players you are tracking as favorites. If no players are displayed, go to any of the player lists and click the yellow star to favorite them!
                     </p>
                 </div>
                 <FilterControls 
