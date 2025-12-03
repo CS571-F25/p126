@@ -1,17 +1,37 @@
 // This component is the page for displaying players who are "trending up" in performance.
 import { Container, Spinner } from "react-bootstrap";
+import { useState } from 'react';
 import { usePlayerData } from '../hooks/usePlayerData';
 import PlayerCard from './PlayerCard';
+import FilterControls from './FilterControls';
 
 export default function TrendingUp() {
     const { top100Players, isLoading } = usePlayerData();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedPositions, setSelectedPositions] = useState([]);
 
     const trendingUpPlayers = top100Players.filter(p => p.trend === 'UP');
 
+    const filteredPlayers = trendingUpPlayers.filter(player => {
+        const matchesName = player.full_name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesPosition = selectedPositions.length === 0 || selectedPositions.includes(player.position);
+        return matchesName && matchesPosition;
+    });
+
     return (
         <Container fluid>
-            <h1>Trending Up Players (from Top 100)</h1>
-            <p>This page displays players from the top 100 list who are currently performing better than their recent baseline.</p>
+            <div className="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h1>Trending Up Players (from Top 100)</h1>
+                    <p className="mb-0">This page displays players from the top 100 list who are currently performing better than their recent baseline.</p>
+                </div>
+                <FilterControls 
+                    searchQuery={searchQuery} 
+                    setSearchQuery={setSearchQuery} 
+                    selectedPositions={selectedPositions} 
+                    setSelectedPositions={setSelectedPositions} 
+                />
+            </div>
             
             {isLoading ? (
                 <div className="text-center">
@@ -21,7 +41,7 @@ export default function TrendingUp() {
                 </div>
             ) : (
                 <div>
-                    {trendingUpPlayers.map((player) => (
+                    {filteredPlayers.map((player) => (
                         <PlayerCard 
                             key={player.player_id} 
                             player={player} 
