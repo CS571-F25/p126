@@ -1,7 +1,13 @@
 import { Card, Image } from 'react-bootstrap';
+import InjuryBadge from './InjuryBadge';
+import TrendArrow from './TrendArrow';
+import FavoriteButton from './FavoriteButton';
+import { useFavorites } from '../hooks/useFavorites.jsx';
 import './PlayerCard.css';
 
 export default function PlayerCard({ player, rank }) {
+    const { isFavorite, toggleFavorite } = useFavorites();
+
     if (!player) {
         return null;
     }
@@ -15,7 +21,10 @@ export default function PlayerCard({ player, rank }) {
             <Card.Body className="d-flex align-items-center py-1 px-3 position-relative">
                 {/* Left Group */}
                 <div className="d-flex align-items-center left-group">
-                    <div className="placeholder-favorite">★</div>
+                    <FavoriteButton 
+                        isFavorite={isFavorite(player.player_id)} 
+                        onToggle={() => toggleFavorite(player.player_id)} 
+                    />
                     <div className="player-rank">{rank}</div>
                     <div className="player-logo">
                         {player.team && <Image src={logoUrl} alt={`${player.team} logo`} />}
@@ -32,8 +41,8 @@ export default function PlayerCard({ player, rank }) {
                         <span className="fw-bold">{player.current_ppg}</span>
                         <span className="ms-1 small">PPG</span>
                     </div>
-                    <div className="placeholder-injury">INJ</div>
-                    <div className="placeholder-trend">↑</div>
+                    <InjuryBadge status={player.injury_status} />
+                    <TrendArrow trend={player.trend} />
                 </div>
             </Card.Body>
         </Card>
