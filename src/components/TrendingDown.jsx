@@ -39,6 +39,10 @@ export default function TrendingDown() {
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>
                 </div>
+            ) : filteredPlayers.length === 0 ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+                    <h2 className="display-4 text-center">No Players Available</h2>
+                </div>
             ) : (
                 <div>
                     {filteredPlayers.map((player) => (

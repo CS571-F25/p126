@@ -1,7 +1,7 @@
 import { Form, Dropdown } from 'react-bootstrap';
 
 export default function FilterControls({ searchQuery, setSearchQuery, selectedPositions, setSelectedPositions }) {
-    const positions = ['QB', 'RB', 'WR', 'TE'];
+    const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
 
     const handlePositionToggle = (pos) => {
         if (selectedPositions.includes(pos)) {

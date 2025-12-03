@@ -10,19 +10,19 @@ export function usePlayerData() {
             setIsLoading(true);
             try {
                 const currentWeek = 10;
-                const weeksToCompare = [currentWeek - 1, currentWeek];
+                const allWeeks = Array.from({length: currentWeek}, (_, i) => i + 1);
 
                 const [playersRes, seasonStatsRes, ...weeklyStatsRes] = await Promise.all([
                     fetch('https://api.sleeper.app/v1/players/nfl'),
                     fetch('https://api.sleeper.app/v1/stats/nfl/regular/2025'),
-                    ...weeksToCompare.map(week => fetch(`https://api.sleeper.app/v1/stats/nfl/regular/2025/${week}`))
+                    ...allWeeks.map(week => fetch(`https://api.sleeper.app/v1/stats/nfl/regular/2025/${week}`))
                 ]);
 
                 const playersData = await playersRes.json();
                 const seasonStats = await seasonStatsRes.json();
                 const weeklyStats = await Promise.all(weeklyStatsRes.map(res => res.json()));
 
-                const fantasyPositions = ['QB', 'RB', 'WR', 'TE'];
+                const fantasyPositions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
 
                 const processedPlayers = Object.values(playersData)
                     .filter(player => fantasyPositions.includes(player.position))
@@ -34,9 +34,23 @@ export function usePlayerData() {
 
                         const current_ppg = parseFloat((fullStats.pts_ppr / fullStats.gp).toFixed(2));
 
+                        // Build Game Log
+                        const gameLog = allWeeks.map((week, index) => {
+                            const weekStats = weeklyStats[index][player.player_id];
+                            return {
+                                week: week,
+                                played: !!weekStats && (weekStats.gp > 0),
+                                opponent: weekStats?.opponent || null,
+                                pts_ppr: weekStats?.pts_ppr || 0
+                            };
+                        });
+
+                        // Calculate Trend based on last 2 weeks
                         let recentGames = 0;
                         let recentPoints = 0;
-                        weeklyStats.forEach(weekStats => {
+                        const recentWeeksStats = weeklyStats.slice(-2);
+
+                        recentWeeksStats.forEach(weekStats => {
                             const weeklyStat = weekStats[player.player_id];
                             if (weeklyStat) {
                                 recentGames += weeklyStat.gp || 0;
@@ -48,7 +62,7 @@ export function usePlayerData() {
                         const pastPoints = fullStats.pts_ppr - recentPoints;
 
                         if (pastGames <= 0) {
-                            return { ...player, current_ppg, trend: 'SAME' };
+                            return { ...player, current_ppg, trend: 'SAME', gameLog };
                         }
 
                         const past_ppg = parseFloat((pastPoints / pastGames).toFixed(2));
@@ -60,7 +74,7 @@ export function usePlayerData() {
                             trend = 'DOWN';
                         }
 
-                        return { ...player, current_ppg, trend };
+                        return { ...player, current_ppg, trend, gameLog };
                     })
                     .filter(player => player !== null);
                 

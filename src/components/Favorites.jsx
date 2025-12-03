@@ -45,11 +45,9 @@ export default function Favorites() {
                     </Spinner>
                 </Container>
             ) : filteredPlayers.length === 0 ? (
-                <p className="text-white">
-                    {favoritePlayers.length === 0 
-                        ? "You haven't favorited any players from the Top 100 yet." 
-                        : "No favorite players match your search filters."}
-                </p>
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+                    <h2 className="display-4 text-center">No Players Available</h2>
+                </div>
             ) : (
                 filteredPlayers.map((player) => {
                     // Find the original rank in the top 100 list
